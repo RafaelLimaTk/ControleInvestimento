@@ -1,4 +1,4 @@
-﻿namespace ControleInvestimento.Business.Models.Asset.Services;
+﻿namespace ControleInvestimento.Business.Models.Transaction.Services;
 
 public interface ITransactionService : IDisposable
 {

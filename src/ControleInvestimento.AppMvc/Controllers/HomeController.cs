@@ -1,6 +1,7 @@
 ﻿using ControleInvestimento.AppMvc.Models;
-using ControleInvestimento.Business.Models.Asset;
 using ControleInvestimento.Business.Models.Asset.Services;
+using ControleInvestimento.Business.Models.Transaction;
+using ControleInvestimento.Business.Models.Transaction.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Asset = ControleInvestimento.Business.Models.Asset.Asset;
@@ -13,34 +14,35 @@ namespace ControleInvestimento.AppMvc.Controllers
         private readonly ITransactionService _transactionService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IAssetService assetService)
+        public HomeController(ILogger<HomeController> logger, IAssetService assetService, ITransactionService transactionService)
         {
             _logger = logger;
             _assetService = assetService;
+            _transactionService = transactionService;
         }
 
         public async Task<IActionResult> Index()
         {
-            Guid id = Guid.Parse("d73dd1f5-74d2-491f-a843-c8423d20e264");
-            var ativoNome = "PETR4";
-            var categoria = InvestmentCategory.Stocks;
-
-            var existAtivo = await _assetService.GetById(id);
-
-            if (existAtivo == null)
-            {
-                var novoAtivo = new Asset(ativoNome, categoria);
-                novoAtivo.AddTransaction(DateTime.Now, 20, 40, true);
-                await _assetService.Add(novoAtivo);
-            }
-            else
-            {
-                existAtivo.AddTransaction(DateTime.Now, 60, 20, true);
-
-                await _assetService.Add(existAtivo); 
-            }
-
             return View();
+        }
+
+        public IActionResult AddTransaction(Asset asset, Transaction item)
+        {
+            ManipulateExistingCart(asset, item);
+
+            return View(nameof(Index));
+        }
+
+        private async Task<Asset> GetAsset(Guid id)
+        {
+            return await _assetService.GetById(id);
+        }
+
+        private void ManipulateExistingCart(Asset asset, Transaction transaction)
+        {
+            asset.AddTransaction(transaction);
+
+            _transactionService.Add(transaction);
         }
 
         public IActionResult Privacy()

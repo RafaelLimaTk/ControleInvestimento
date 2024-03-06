@@ -1,5 +1,4 @@
-﻿using ControleInvestimento.Business.Core.Data;
-using ControleInvestimento.Business.Models.Asset;
+﻿using ControleInvestimento.Business.Models.Asset;
 using ControleInvestimento.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +6,16 @@ namespace ControleInvestimento.Infra.Data.Repository;
 
 public class AssetRepository : Repository<Asset>, IAssetRepository
 {
-    public AssetRepository(ApplicationDbContext context) : base(context) 
-    { 
+    private readonly ApplicationDbContext _context;
+    public AssetRepository(ApplicationDbContext context) : base(context)
+    {
+        _context = context;
+    }
+
+    public async Task<Asset> GetByIdWithTransaction(Guid id)
+    {
+        return await _context.Assets
+            .Include(a => a.Transactions)
+            .FirstOrDefaultAsync(a => a.Id == id);
     }
 }

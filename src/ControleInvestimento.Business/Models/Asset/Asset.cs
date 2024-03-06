@@ -1,5 +1,4 @@
 ﻿using ControleInvestimento.Business.Core.Models;
-using System.Transactions;
 
 namespace ControleInvestimento.Business.Models.Asset;
 
@@ -7,8 +6,7 @@ public class Asset : Entity
 {
     public string Name { get; private set; }
     public InvestmentCategory Category { get; private set; }
-    private List<Transaction> _transactions = new List<Transaction>();
-    public IEnumerable<Transaction> Transactions => _transactions.AsReadOnly();
+    public List<Transaction.Transaction> Transactions { get; set; } = new List<Transaction.Transaction>();
     public decimal AveragePrice { get; private set; }
 
     public Asset() { }
@@ -19,18 +17,11 @@ public class Asset : Entity
         Category = category;
     }
 
-    public void AddTransaction(DateTime date, int quantity, decimal price, bool isBuy)
+    public void AddTransaction(Transaction.Transaction transaction)
     {
-        _transactions.Add(new Transaction
-        {
-            Id = Guid.NewGuid(),
-            AssetId = this.Id,
-            Date = date,
-            Quantity = quantity,
-            Price = price,
-            IsBuy = isBuy
-        });
+        transaction.AssociateAsset(Id);
 
+        Transactions.Add(transaction);
         GetAveragePrice();
     }
 
@@ -47,5 +38,4 @@ public class Asset : Entity
 
         AveragePrice = totalQuantity > 0 ? totalCost / totalQuantity : 0;
     }
-
 }

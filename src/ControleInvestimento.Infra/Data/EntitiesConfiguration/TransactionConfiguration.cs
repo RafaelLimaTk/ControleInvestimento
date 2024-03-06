@@ -1,4 +1,4 @@
-﻿using ControleInvestimento.Business.Models.Asset;
+﻿using ControleInvestimento.Business.Models.Transaction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,8 +27,6 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
                 .WithMany(a => a.Transactions)
                 .HasForeignKey(t => t.AssetId);
 
-        builder.HasIndex(t => t.AssetId);
-
-        builder.ToTable("Transações");
+        builder.ToTable("Transacao");
     }
 }

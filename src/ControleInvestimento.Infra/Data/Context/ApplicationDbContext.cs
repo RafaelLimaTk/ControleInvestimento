@@ -1,4 +1,5 @@
 ﻿using ControleInvestimento.Business.Models.Asset;
+using ControleInvestimento.Business.Models.Transaction;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControleInvestimento.Infra.Data.Context;

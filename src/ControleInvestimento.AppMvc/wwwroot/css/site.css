@@ -16,3 +16,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.bg-card-portifolio {
+    background-color: #F3F5F6;
+}
+
+.bg-card-value-portifolio {
+    background-color: #22555A;
+}
+
+p{
+    margin: 0;
+}

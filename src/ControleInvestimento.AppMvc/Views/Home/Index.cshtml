@@ -1,8 +1,41 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section>
+    <div class="row p-5 bg-card-portifolio rounded rounded-3">
+        <div class="row mb-3">
+            <h3 class="col-6">Meu Portifólio</h3>
+            <div class="d-flex align-items-center justify-content-end col-6">
+                <span class="text-black-50 me-2">Ultimo dia atualizado</span>
+                <h5 class="mb-0">@DateTime.Now.ToString("dd MMMM 'de' yyyy")</h5>
+            </div>
+        </div>
+        <div class="row flex-column">
+            <div class="bg-card-value-portifolio py-2 px-3 col-3 rounded rounded-3 text-white mb-3">
+                <div class="row">
+                    <p class="col-10">Valor Portifólio</p>
+                    <i class="col-2 bi bi-info-circle"></i>
+                </div>
+                <h2 class="mb-0">$70k</h2>
+                <p>Valor aplicado: $67k</p>
+            </div>
+            <div class="bg-white py-2 px-3 col-3 rounded rounded-3 mb-3">
+                <div class="row">
+                    <p class="col-10">Total investido</p>
+                    <i class="col-2 bi bi-info-circle"></i>
+                </div>
+                <h2 class="mb-0">$55k</h2>
+                <p>15 ações investidas</p>
+            </div>
+            <div class="bg-white py-2 px-3 col-3 rounded rounded-3 mb-3">
+                <div class="row">
+                    <p class="col-10">Valor Portifólio</p>
+                    <i class="col-2 bi bi-info-circle"></i>
+                </div>
+                <h2 class="mb-0">$70k</h2>
+                <p>Valor aplicado: $67k</p>
+            </div>
+        </div>
+    </div>
+</section>

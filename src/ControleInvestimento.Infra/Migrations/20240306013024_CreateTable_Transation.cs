@@ -9,6 +9,34 @@ namespace ControleInvestimento.Infra.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "Quantity",
+                table: "Ativos");
+
+            migrationBuilder.DropColumn(
+                name: "CurrentPrice",
+                table: "Ativos");
+
+            migrationBuilder.DropColumn(
+                name: "InitialInvestment",
+                table: "Ativos");
+
+            migrationBuilder.DropColumn(
+                name: "TotalBalance",
+                table: "Ativos");
+
+            migrationBuilder.DropColumn(
+                name: "CategoryPercentage",
+                table: "Ativos");
+
+            migrationBuilder.DropColumn(
+                name: "IdealPercentage",
+                table: "Ativos");
+
+            migrationBuilder.DropColumn(
+                name: "IdealValue",
+                table: "Ativos");
+
             migrationBuilder.CreateTable(
                 name: "Transações",
                 columns: table => new

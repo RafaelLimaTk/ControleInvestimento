@@ -1,4 +1,4 @@
-﻿using ControleInvestimento.Business.Models.Asset;
+﻿using ControleInvestimento.Business.Models.Transaction;
 using ControleInvestimento.Infra.Data.Context;
 
 namespace ControleInvestimento.Infra.Data.Repository;

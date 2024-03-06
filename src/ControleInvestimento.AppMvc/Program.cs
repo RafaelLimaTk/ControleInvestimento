@@ -1,6 +1,8 @@
 using ControleInvestimento.Business.Core.Notifications;
 using ControleInvestimento.Business.Models.Asset;
 using ControleInvestimento.Business.Models.Asset.Services;
+using ControleInvestimento.Business.Models.Transaction;
+using ControleInvestimento.Business.Models.Transaction.Services;
 using ControleInvestimento.Infra.Data.Context;
 using ControleInvestimento.Infra.Data.Repository;
 using Microsoft.EntityFrameworkCore;

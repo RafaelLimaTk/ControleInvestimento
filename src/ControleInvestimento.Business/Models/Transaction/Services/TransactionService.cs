@@ -1,7 +1,8 @@
 ﻿using ControleInvestimento.Business.Core.Notifications;
 using ControleInvestimento.Business.Core.Services;
+using ControleInvestimento.Business.Models.Transaction;
 
-namespace ControleInvestimento.Business.Models.Asset.Services;
+namespace ControleInvestimento.Business.Models.Transaction.Services;
 
 public class TransactionService : BaseService, ITransactionService
 {

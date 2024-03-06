@@ -45,4 +45,9 @@ public class AssetService : BaseService, IAssetService
     {
         return await _assetRepository.GetById(id);
     }
+
+    public async Task<Asset> GetByIdWithTransaction(Guid id)
+    {
+        return await _assetRepository.GetByIdWithTransaction(id);
+    }
 }
