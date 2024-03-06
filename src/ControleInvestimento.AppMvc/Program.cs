@@ -22,8 +22,10 @@ namespace ControleInvestimento.AppMvc
                     .Assembly.FullName)));
 
             builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+            builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             builder.Services.AddScoped<IAssetService, AssetService>();
+            builder.Services.AddScoped<ITransactionService, TransactionService>();
             builder.Services.AddScoped<INotifier, Notifier>();
 
             var app = builder.Build();

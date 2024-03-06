@@ -40,4 +40,9 @@ public class AssetService : BaseService, IAssetService
     {
         _assetRepository?.Dispose();
     }
+
+    public async Task<Asset> GetById(Guid id)
+    {
+        return await _assetRepository.GetById(id);
+    }
 }
