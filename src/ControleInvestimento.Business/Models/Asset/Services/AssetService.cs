@@ -17,6 +17,16 @@ public class AssetService : BaseService, IAssetService
         return await _assetRepository.GetAll();
     }
 
+    public async Task<Asset> GetById(Guid id)
+    {
+        return await _assetRepository.GetById(id);
+    }
+
+    public async Task<Asset> GetByIdWithTransaction(Guid id)
+    {
+        return await _assetRepository.GetByIdWithTransaction(id);
+    }
+
     public async Task Add(Asset asset)
     {
         if (!ExecuteValidation(new AssetValidation(), asset)) return;
@@ -39,15 +49,5 @@ public class AssetService : BaseService, IAssetService
     public void Dispose()
     {
         _assetRepository?.Dispose();
-    }
-
-    public async Task<Asset> GetById(Guid id)
-    {
-        return await _assetRepository.GetById(id);
-    }
-
-    public async Task<Asset> GetByIdWithTransaction(Guid id)
-    {
-        return await _assetRepository.GetByIdWithTransaction(id);
     }
 }

@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Asset> Assets { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<InvestmentStatics> InvestmentStatics { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

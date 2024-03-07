@@ -6,7 +6,10 @@ public class AssetValidation : AbstractValidator<Asset>
 {
     public AssetValidation()
     {
-        RuleFor(x => x.Name).NotEmpty().WithMessage("Nome é requirido.");
-        RuleFor(x => x.AveragePrice).GreaterThan(0).WithMessage("O preço médio deve ser maior que zero.");
+        RuleFor(a => a.Name).NotEmpty().WithMessage("Nome é requirido.");
+
+        RuleFor(a => a.InvestmentStatics.CurrentPrice)
+            .GreaterThan(0)
+            .WithMessage("O preço atual deve ser maior que zero.");
     }
 }

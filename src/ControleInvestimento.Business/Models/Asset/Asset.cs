@@ -7,7 +7,7 @@ public class Asset : Entity
     public string Name { get; private set; }
     public InvestmentCategory Category { get; private set; }
     public List<Transaction.Transaction> Transactions { get; set; } = new List<Transaction.Transaction>();
-    public decimal AveragePrice { get; private set; }
+    public InvestmentStatics InvestmentStatics { get; set; }
 
     public Asset() { }
 
@@ -36,6 +36,11 @@ public class Asset : Entity
             totalCost += transaction.Price * transaction.Quantity;
         }
 
-        AveragePrice = totalQuantity > 0 ? totalCost / totalQuantity : 0;
+        InvestmentStatics.AveragePrice = totalQuantity > 0 ? totalCost / totalQuantity : 0;
+    }
+
+    public void SetCurrentPrice(decimal currentPrice)
+    {
+        InvestmentStatics.SetCurrentPrice(currentPrice);
     }
 }

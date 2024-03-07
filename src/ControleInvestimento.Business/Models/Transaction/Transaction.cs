@@ -1,4 +1,5 @@
 ﻿using ControleInvestimento.Business.Core.Models;
+using ControleInvestimento.Business.Models.Asset;
 
 namespace ControleInvestimento.Business.Models.Transaction;
 
@@ -9,6 +10,7 @@ public class Transaction : Entity
     public int Quantity { get; set; }
     public decimal Price { get; set; }
     public bool IsBuy { get; set; }
+    public InvestmentStatics InvestmentStatics { get; set; }
 
     public Asset.Asset Asset { get; set; }
 
