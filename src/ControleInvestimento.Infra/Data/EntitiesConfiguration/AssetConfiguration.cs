@@ -17,13 +17,13 @@ public class AssetConfiguration : IEntityTypeConfiguration<Asset>
         builder.Property(a => a.Category)
                 .IsRequired();
 
-        builder.Property(a => a.AveragePrice)
-                .IsRequired()
-                .HasColumnType("decimal(18, 2)");
-
         builder.HasMany(a => a.Transactions)
             .WithOne(t => t.Asset)
             .HasForeignKey(t => t.AssetId);
+
+        builder.HasOne(a => a.InvestmentStatics)
+            .WithOne(a => a.Asset)
+            .HasForeignKey<InvestmentStatics>(t => t.AssetId);
 
         builder.ToTable("Ativos");
     }

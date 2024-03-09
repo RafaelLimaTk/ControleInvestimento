@@ -1,16 +1,39 @@
-﻿namespace ControleInvestimento.Business.Models.Asset;
+﻿using ControleInvestimento.Business.Core.Models;
 
-public class InvestmentStatics
+namespace ControleInvestimento.Business.Models.Asset;
+
+public class InvestmentStatics : Entity
 {
-    public Guid AssetId { get; private set; }
+    public Guid AssetId { get; set; }
     public decimal AveragePrice { get; private set; }
     public decimal CurrentPrice { get; private set; }
-    public decimal TotalInvested { get; private set; }
+    public decimal TotalValue { get; private set; }
 
-    public void SetCurrentPrice(decimal currentPrice)
+
+    public Asset Asset { get; private set; }
+
+    internal void AssociateAsset(Guid assetId)
+    {
+        AssetId = assetId;
+    }
+
+    internal void SetCurrentPrice(decimal currentPrice)
     {
         if (currentPrice == 0) return;
 
         CurrentPrice = currentPrice;
+    }
+
+    internal void SetAveragePrice(decimal averagePrice)
+    {
+        if (averagePrice < 0) averagePrice = 0;
+
+        AveragePrice = averagePrice;
+        SetCurrentPrice(averagePrice);
+    }
+
+    internal void AddToTotalValue(decimal totalValue)
+    {
+        TotalValue += totalValue;
     }
 }

@@ -1,6 +1,8 @@
 using ControleInvestimento.Business.Core.Notifications;
 using ControleInvestimento.Business.Models.Asset;
 using ControleInvestimento.Business.Models.Asset.Services;
+using ControleInvestimento.Business.Models.Portifolio;
+using ControleInvestimento.Business.Models.Portifolio.Services;
 using ControleInvestimento.Business.Models.Transaction;
 using ControleInvestimento.Business.Models.Transaction.Services;
 using ControleInvestimento.Infra.Data.Context;
@@ -25,9 +27,11 @@ namespace ControleInvestimento.AppMvc
 
             builder.Services.AddScoped<IAssetRepository, AssetRepository>();
             builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+            builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 
             builder.Services.AddScoped<IAssetService, AssetService>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
+            builder.Services.AddScoped<IPortfolioService, PortfolioService>();
             builder.Services.AddScoped<INotifier, Notifier>();
 
             var app = builder.Build();

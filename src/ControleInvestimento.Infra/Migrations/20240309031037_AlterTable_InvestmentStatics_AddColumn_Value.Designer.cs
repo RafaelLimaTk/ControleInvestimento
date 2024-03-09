@@ -4,6 +4,7 @@ using ControleInvestimento.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleInvestimento.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309031037_AlterTable_InvestmentStatics_AddColumn_Value")]
+    partial class AlterTable_InvestmentStatics_AddColumn_Value
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,12 +38,7 @@ namespace ControleInvestimento.Infra.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("PortfolioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PortfolioId");
 
                     b.ToTable("Ativos", (string)null);
                 });
@@ -61,7 +58,10 @@ namespace ControleInvestimento.Infra.Migrations
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("TotalValue")
+                    b.Property<decimal>("TotalInvested")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Value")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -70,20 +70,6 @@ namespace ControleInvestimento.Infra.Migrations
                         .IsUnique();
 
                     b.ToTable("InvestmentStatics");
-                });
-
-            modelBuilder.Entity("ControleInvestimento.Business.Models.Portifolio.Portfolio", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("TotalInvested")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Portifolio", (string)null);
                 });
 
             modelBuilder.Entity("ControleInvestimento.Business.Models.Transaction.Transaction", b =>
@@ -114,16 +100,6 @@ namespace ControleInvestimento.Infra.Migrations
                     b.ToTable("Transacao", (string)null);
                 });
 
-            modelBuilder.Entity("ControleInvestimento.Business.Models.Asset.Asset", b =>
-                {
-                    b.HasOne("ControleInvestimento.Business.Models.Portifolio.Portfolio", "Portfolio")
-                        .WithMany("Assets")
-                        .HasForeignKey("PortfolioId")
-                        .IsRequired();
-
-                    b.Navigation("Portfolio");
-                });
-
             modelBuilder.Entity("ControleInvestimento.Business.Models.Asset.InvestmentStatics", b =>
                 {
                     b.HasOne("ControleInvestimento.Business.Models.Asset.Asset", "Asset")
@@ -150,11 +126,6 @@ namespace ControleInvestimento.Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("ControleInvestimento.Business.Models.Portifolio.Portfolio", b =>
-                {
-                    b.Navigation("Assets");
                 });
 #pragma warning restore 612, 618
         }

@@ -22,9 +22,9 @@ public class AssetService : BaseService, IAssetService
         return await _assetRepository.GetById(id);
     }
 
-    public async Task<Asset> GetByIdWithTransaction(Guid id)
+    public Asset GetAssetWithInvestmentStatics(Guid id)
     {
-        return await _assetRepository.GetByIdWithTransaction(id);
+        return _assetRepository.GetAssetWithInvestmentStaticsAndTransaction(id);
     }
 
     public async Task Add(Asset asset)
