@@ -33,7 +33,7 @@ public class Asset : Entity
 
     public void GetAveragePrice()
     {
-        int totalQuantity = 0;
+        var totalQuantity = 0;
         decimal totalCost = 0;
 
         foreach (var transaction in Transactions.Where(t => t.IsBuy))
@@ -42,7 +42,7 @@ public class Asset : Entity
             totalCost += transaction.Price * transaction.Quantity;
         }
 
-        decimal averagePrice = totalQuantity > 0 ? totalCost / totalQuantity : 0;
+        var averagePrice = totalQuantity > 0 ? totalCost / totalQuantity : 0;
         InvestmentStatics.SetAveragePrice(averagePrice);
     }
 
@@ -55,12 +55,9 @@ public class Asset : Entity
 
     internal void ValueTotalForBuyAsset(Transaction.Transaction transaction)
     {
-        if (transaction.IsBuy)
-        {
-            decimal valor = transaction.CalculateTransaction();
-            InvestmentStatics.AddToTotalValue(valor);
-        }
+        if (!transaction.IsBuy) return;
+
+        var valor = transaction.CalculateTransaction();
+        InvestmentStatics.AddToTotalValue(valor);
     }
-
-
 }

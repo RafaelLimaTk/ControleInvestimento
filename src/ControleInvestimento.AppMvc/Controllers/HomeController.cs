@@ -1,4 +1,7 @@
-﻿using ControleInvestimento.AppMvc.Models;
+﻿using AutoMapper;
+using ControleInvestimento.AppMvc.Models;
+using ControleInvestimento.AppMvc.ViewModels;
+using ControleInvestimento.Business.Models.Asset;
 using ControleInvestimento.Business.Models.Asset.Services;
 using ControleInvestimento.Business.Models.Portifolio;
 using ControleInvestimento.Business.Models.Portifolio.Services;
@@ -16,34 +19,25 @@ namespace ControleInvestimento.AppMvc.Controllers
         private readonly ITransactionService _transactionService;
         private readonly IPortfolioService _portfolioService;
         private readonly ILogger<HomeController> _logger;
+        private readonly IMapper _mapper;
 
         public HomeController(ILogger<HomeController> logger,
                                 IAssetService assetService,
                                 ITransactionService transactionService,
-                                IPortfolioService portfolioService)
+                                IPortfolioService portfolioService, IMapper mapper)
         {
             _logger = logger;
             _assetService = assetService;
             _transactionService = transactionService;
             _portfolioService = portfolioService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            //var portfolio = await _portfolioService.GetPortfolioWithAssets(Guid.Parse("f3d4c190-e12a-4975-87da-4e3d39980fa4"));
+            var portfolioWithAssets = await _portfolioService.GetPortfolioWithAssets(Guid.Parse("14e3df8e-e45b-44f1-99a3-0e003265b6fc"));
 
-            //var asset = new Asset("LEVE3", InvestmentCategory.Stocks, portfolio.Id);
-            //asset.AddTransaction(new Transaction(asset.Id, 58, 37.81m, true));
-
-            //portfolio.AddAsset(asset);
-
-            //await _assetService.Add(asset);
-
-            //var asset = _assetService.GetAssetWithInvestmentStatics(Guid.Parse("58480655-45e3-4f20-a120-324f08e94b44"));
-            //var transacao = new Transaction(asset.Id, 13, 32.74m, true);
-            //ManipulateExistingCart(asset, transacao, portfolio);
-
-            return View();
+            return View(_mapper.Map<PortfolioViewModel>(portfolioWithAssets));
         }
 
         public IActionResult AddTransaction(Asset asset, Transaction item, Portfolio portfolio)
@@ -60,11 +54,19 @@ namespace ControleInvestimento.AppMvc.Controllers
 
         private void ManipulateExistingCart(Asset asset, Transaction transaction, Portfolio portfolio)
         {
-            asset.AddTransaction(transaction);
-            portfolio.UpdateAsset(asset);
+            try
+            {
+                asset.AddTransaction(transaction);
+                portfolio.UpdateAsset(asset);
 
-            _assetService.Update(asset);
-            _transactionService.Add(transaction);
+                _assetService.Update(asset);
+                _transactionService.Add(transaction);
+            }
+            catch (Exception ex)
+            {
+
+                throw;  
+            }
         }
 
         public IActionResult Privacy()

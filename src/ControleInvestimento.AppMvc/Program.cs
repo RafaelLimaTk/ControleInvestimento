@@ -1,3 +1,4 @@
+using ControleInvestimento.AppMvc.Mappings;
 using ControleInvestimento.Business.Core.Notifications;
 using ControleInvestimento.Business.Models.Asset;
 using ControleInvestimento.Business.Models.Asset.Services;
@@ -33,6 +34,8 @@ namespace ControleInvestimento.AppMvc
             builder.Services.AddScoped<ITransactionService, TransactionService>();
             builder.Services.AddScoped<IPortfolioService, PortfolioService>();
             builder.Services.AddScoped<INotifier, Notifier>();
+
+            builder.Services.AddAutoMapper(typeof(DomainToViewModelMappingProfile));
 
             var app = builder.Build();
 

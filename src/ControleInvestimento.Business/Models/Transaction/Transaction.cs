@@ -1,4 +1,5 @@
 ﻿using ControleInvestimento.Business.Core.Models;
+using ControleInvestimento.Business.Models.Asset;
 
 namespace ControleInvestimento.Business.Models.Transaction;
 
@@ -14,9 +15,8 @@ public class Transaction : Entity
 
     public Transaction() { }
 
-    public Transaction(Guid assetId, int quantity, decimal price, bool isBuy)
+    public Transaction(int quantity, decimal price, bool isBuy)
     {
-        AssetId = assetId;
         Date = DateTime.Now;
         Quantity = quantity;
         Price = price;

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ControleInvestimento.AppMvc.ViewModels.PortfolioViewModel
+
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -17,7 +19,7 @@
                     <div class="card bg-primary text-white rounded shadow">
                         <div class="card-body">
                             <h5 class="card-title">Valor Portfólio</h5>
-                            <h2 class="card-text">$70k</h2>
+                            <h2 class="card-text">$@Model.TotalInvested</h2>
                             <p class="card-text">Valor aplicado: $67k</p>
                             <i class="bi bi-info-circle"></i>
                         </div>

@@ -22,10 +22,7 @@ public class Portfolio : Entity
 
     public void RemoveAsset(Asset.Asset asset)
     {
-        if (Assets.Remove(asset))
-        {
-            UpdateTotalInvested();
-        }
+        if (Assets.Remove(asset)) UpdateTotalInvested();
     }
 
     internal void UpdateTotalInvested()
