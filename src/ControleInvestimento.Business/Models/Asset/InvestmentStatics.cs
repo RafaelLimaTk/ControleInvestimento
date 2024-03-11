@@ -9,7 +9,6 @@ public class InvestmentStatics : Entity
     public decimal CurrentPrice { get; private set; }
     public decimal TotalValue { get; private set; }
 
-
     public Asset Asset { get; private set; }
 
     internal void AssociateAsset(Guid assetId)

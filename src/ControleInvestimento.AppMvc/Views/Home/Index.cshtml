@@ -4,6 +4,36 @@
     ViewData["Title"] = "Home";
 }
 
+<style>
+    .custom-table {
+        background-color: #ffffff; /* Cor de fundo da tabela */
+        border-radius: 10px; /* Borda arredondada */
+        overflow: hidden; /* Oculta a barra de rolagem horizontal */
+    }
+
+        .custom-table thead th {
+            background-color: #007bff; /* Cor de fundo do cabeçalho */
+            color: #ffffff; /* Cor do texto do cabeçalho */
+            border: none; /* Remove a borda do cabeçalho */
+        }
+
+        .custom-table tbody td {
+            border: none; /* Remove as bordas das células do corpo da tabela */
+        }
+
+    .price-change {
+        font-size: 16px;
+    }
+
+    .up {
+        color: #28a745; /* Cor verde para mudança de preço positiva */
+    }
+
+    .down {
+        color: #dc3545; /* Cor vermelha para mudança de preço negativa */
+    }
+</style>
+
 <section class="container py-5">
     <div class="card bg-light rounded border-0">
         <div class="card-body">
@@ -20,7 +50,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Valor Portfólio</h5>
                             <h2 class="card-text">$@Model.TotalInvested</h2>
-                            <p class="card-text">Valor aplicado: $67k</p>
+                            <p class="card-text">Valor aplicado: $@Model.TotalInvested</p>
                             <i class="bi bi-info-circle"></i>
                         </div>
                     </div>
@@ -30,37 +60,49 @@
                         <div class="card-body">
                             <h5 class="card-title">Total investido</h5>
                             <h2 class="card-text">$55k</h2>
-                            <p class="card-text">15 ações investidas</p>
+                            <p class="card-text">Total de ativos investidos @Model.Assets.Count()</p>
                             <i class="bi bi-info-circle"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card bg-light rounded shadow">
-                        <div class="card-body">
-                            <h5 class="card-title">Diversificação do Portfólio</h5>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Ações</div>
-                            </div>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-secondary" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Títulos</div>
-                            </div>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Fundos Mútuos</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <investment-diversification assets='@Model.Assets' portfolio-total-value='@Model.TotalInvested'></investment-diversification>
             </div>
             <div class="col mt-3">
                 <canvas id="myChart" width="400" height="auto"></canvas>
             </div>
-
         </div>
     </div>
 </section>
+<section class="container mt-4">
+    <h2 class="mb-4">Meus Ativos</h2>
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Preço Médio</th>
+                    <th scope="col">Preço Atual</th>
+                    <th scope="col">Variação</th>
+                    <th scope="col">Total Investido</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var asset in Model.Assets)
+                {
+                    <tr>
+                        <td>@asset.Name</td>
+                        <td>$@asset.InvestmentStatics.AveragePrice</td>
+                        <td>$@asset.InvestmentStatics.CurrentPrice</td>
+                        <td class="price-change up"><i class="fas fa-caret-up"></i> +25%</td>
+                        <td>$@asset.InvestmentStatics.TotalValue</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
 
-@section Scripts{
+@section Scripts {
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
