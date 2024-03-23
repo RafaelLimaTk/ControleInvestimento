@@ -7,7 +7,7 @@ namespace ControleInvestimento.Business.Models.Asset.Services;
 public class AssetService : BaseService, IAssetService
 {
     private readonly IAssetRepository _assetRepository;
-    public AssetService(IAssetRepository assetRepository, INotifier notifier) : base(notifier) 
+    public AssetService(IAssetRepository assetRepository, INotifier notifier) : base(notifier)
     {
         _assetRepository = assetRepository;
     }
@@ -22,9 +22,9 @@ public class AssetService : BaseService, IAssetService
         return await _assetRepository.GetById(id);
     }
 
-    public Asset GetAssetWithInvestmentStatics(Guid id)
+    public async Task<Asset> GetAssetWithInvestmentStatics(Guid id)
     {
-        return _assetRepository.GetAssetWithInvestmentStaticsAndTransaction(id);
+        return await _assetRepository.GetAssetWithInvestmentStaticsAndTransaction(id);
     }
 
     public async Task Add(Asset asset)

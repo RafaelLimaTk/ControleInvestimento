@@ -35,4 +35,9 @@ public class InvestmentStatics : Entity
     {
         TotalValue += totalValue;
     }
+
+    internal void SetTotalValue(decimal totalValue)
+    {
+        TotalValue = totalValue;
+    }
 }

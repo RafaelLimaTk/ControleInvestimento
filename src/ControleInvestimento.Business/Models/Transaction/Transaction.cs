@@ -1,5 +1,4 @@
 ﻿using ControleInvestimento.Business.Core.Models;
-using ControleInvestimento.Business.Models.Asset;
 
 namespace ControleInvestimento.Business.Models.Transaction;
 

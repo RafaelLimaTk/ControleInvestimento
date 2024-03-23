@@ -11,10 +11,10 @@ public class PortfolioRepository : Repository<Portfolio>, IPortfolioRepository
     }
 
     public async Task<Portfolio> GetPortfolioWithAssets(Guid portfolioId)
-    {
-        return await _applicationDbContext.Portfolios
+#pragma warning disable CS8603 // Possível retorno de referência nula.
+        => await _applicationDbContext.Portfolios
                              .Include(p => p.Assets)
                              .ThenInclude(a => a.InvestmentStatics)
                              .FirstOrDefaultAsync(p => p.Id == portfolioId);
-    }
+#pragma warning restore CS8603 // Possível retorno de referência nula.
 }

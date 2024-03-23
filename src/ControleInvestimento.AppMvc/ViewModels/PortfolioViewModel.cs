@@ -1,6 +1,4 @@
-﻿using ControleInvestimento.Business.Models.Portifolio;
-
-namespace ControleInvestimento.AppMvc.ViewModels;
+﻿namespace ControleInvestimento.AppMvc.ViewModels;
 
 public class PortfolioViewModel
 {

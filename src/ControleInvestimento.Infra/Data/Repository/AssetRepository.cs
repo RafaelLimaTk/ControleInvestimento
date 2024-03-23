@@ -12,11 +12,9 @@ public class AssetRepository : Repository<Asset>, IAssetRepository
         _context = context;
     }
 
-    public Asset GetAssetWithInvestmentStaticsAndTransaction(Guid assetId)
-    {
-        return _context.Assets
-            .Include(a => a.InvestmentStatics)
-            .Include(a => a.Transactions)
-            .FirstOrDefault(a => a.Id == assetId);
-    }
+    public async Task<Asset> GetAssetWithInvestmentStaticsAndTransaction(Guid assetId)
+        => await _context.Assets
+                .Include(a => a.InvestmentStatics)
+                .Include(a => a.Transactions)
+                .FirstOrDefaultAsync(a => a.Id == assetId);
 }

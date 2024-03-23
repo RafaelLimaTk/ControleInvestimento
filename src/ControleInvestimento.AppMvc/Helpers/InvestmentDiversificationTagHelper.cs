@@ -15,7 +15,7 @@ public class InvestmentDiversificationTagHelper : TagHelper
 
     private static readonly Dictionary<InvestmentCategory, string> CategoryColors = new Dictionary<InvestmentCategory, string>
     {
-        { InvestmentCategory.Stocks, "primary" }, 
+        { InvestmentCategory.Stocks, "primary" },
         { InvestmentCategory.REITs, "secundary" },
         { InvestmentCategory.ETFs, "info" },
     };
@@ -61,7 +61,7 @@ public class InvestmentDiversificationTagHelper : TagHelper
             diversification.Add(new DiversificationItem
             {
                 Category = category,
-                Percentage = Math.Round(percentage) 
+                Percentage = Math.Round(percentage)
             });
         }
 

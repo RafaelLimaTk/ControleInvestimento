@@ -4,5 +4,5 @@ namespace ControleInvestimento.Business.Models.Asset;
 
 public interface IAssetRepository : IRepository<Asset>
 {
-    Asset GetAssetWithInvestmentStaticsAndTransaction(Guid aseetId);
+    Task<Asset> GetAssetWithInvestmentStaticsAndTransaction(Guid aseetId);
 }

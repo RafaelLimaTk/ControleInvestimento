@@ -100,6 +100,8 @@
             </tbody>
         </table>
     </div>
+    <a class="btn btn-secondary fy-update">Atualizar investimento</a>
+    <a class="btn btn-primary fy-add">Adicionar Ativo</a>
 </section>
 
 @section Scripts {
@@ -125,6 +127,30 @@
                 }
             }
         });
-    </script>
 
+        $('.fy-update').click(function () {
+            $.ajax({
+                url: '/Home/UpdateTransaction',
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        $('.fy-add').click(function () {
+            $(this).prop('disabled', true);
+
+            $.ajax({
+                url: '/Home/AddAssetTransaction',
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Erro na solicitação AJAX: ', textStatus, ', ', errorThrown);
+                },
+            });
+        });
+    </script>
 }

@@ -53,7 +53,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         return await _applicationDbContext.SaveChangesAsync();
     }
 
-    public virtual async Task Update(TEntity entity)
+    public async Task Update(TEntity entity)
     {
         _applicationDbContext.Entry(entity).State = EntityState.Modified;
         await SaveChanges();

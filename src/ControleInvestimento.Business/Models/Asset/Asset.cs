@@ -7,7 +7,7 @@ public class Asset : Entity
 {
     public string Name { get; private set; }
     public InvestmentCategory Category { get; private set; }
-    public List<Transaction.Transaction> Transactions { get; private set; } = new List<Transaction.Transaction>();
+    public List<Transaction.Transaction> Transactions { get; private set; }
     public InvestmentStatics InvestmentStatics { get; private set; }
     public Guid PortfolioId { get; set; }
     public Portfolio Portfolio { get; set; }
@@ -20,27 +20,27 @@ public class Asset : Entity
         Category = category;
         PortfolioId = portfolioId;
         InvestmentStatics = new InvestmentStatics();
+        Transactions = new List<Transaction.Transaction>();
     }
 
     public void AddTransaction(Transaction.Transaction transaction)
     {
-        transaction.AssociateAsset(Id);
-
+        AssociateTransactionToAsset(transaction);
         Transactions.Add(transaction);
+
         UpdateInvestmentStatics(transaction);
         GetAveragePrice();
     }
 
-    public void GetAveragePrice()
+    internal void GetAveragePrice()
     {
-        var totalQuantity = 0;
-        decimal totalCost = 0;
+        var totalCost = Transactions
+            .Where(t => t.IsBuy)
+            .Sum(t => t.Price * t.Quantity);
 
-        foreach (var transaction in Transactions.Where(t => t.IsBuy))
-        {
-            totalQuantity += transaction.Quantity;
-            totalCost += transaction.Price * transaction.Quantity;
-        }
+        var totalQuantity = Transactions
+            .Where(t => t.IsBuy)
+            .Sum(t => t.Quantity);
 
         var averagePrice = totalQuantity > 0 ? totalCost / totalQuantity : 0;
         InvestmentStatics.SetAveragePrice(averagePrice);
@@ -48,8 +48,7 @@ public class Asset : Entity
 
     internal void UpdateInvestmentStatics(Transaction.Transaction transaction)
     {
-        InvestmentStatics.AssociateAsset(Id);
-
+        AssociateInvestmentStaticsToAsset();
         ValueTotalForBuyAsset(transaction);
     }
 
@@ -59,5 +58,20 @@ public class Asset : Entity
 
         var valor = transaction.CalculateTransaction();
         InvestmentStatics.AddToTotalValue(valor);
+    }
+
+    private void AssociateTransactionToAsset(Transaction.Transaction transaction)
+    {
+        transaction.AssociateAsset(Id);
+    }
+
+    private void AssociateInvestmentStaticsToAsset()
+    {
+        InvestmentStatics.AssociateAsset(Id);
+    }
+
+    public void UpdateTotalInvested()
+    {
+        InvestmentStatics.SetTotalValue(InvestmentStatics.CurrentPrice * Transactions.Sum(t => t.Quantity));
     }
 }

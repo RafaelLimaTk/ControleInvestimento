@@ -35,16 +35,9 @@ namespace ControleInvestimento.AppMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var portfolioWithAssets = await _portfolioService.GetPortfolioWithAssets(Guid.Parse("14e3df8e-e45b-44f1-99a3-0e003265b6fc"));
+            var portfolioWithAssets = await _portfolioService.GetPortfolioWithAssets(Guid.Parse("7c5c6310-51d8-4ad5-bd9d-914909e74ea3"));
 
             return View(_mapper.Map<PortfolioViewModel>(portfolioWithAssets));
-        }
-
-        public IActionResult AddTransaction(Asset asset, Transaction item, Portfolio portfolio)
-        {
-            ManipulateExistingCart(asset, item, portfolio);
-
-            return View(nameof(Index));
         }
 
         private async Task<Asset> GetAsset(Guid id)
@@ -52,23 +45,50 @@ namespace ControleInvestimento.AppMvc.Controllers
             return await _assetService.GetById(id);
         }
 
-        private void ManipulateExistingCart(Asset asset, Transaction transaction, Portfolio portfolio)
+        [HttpPost]
+        public async Task<IActionResult> AddAssetTransaction()
         {
+            var portfolioWithAssets = await _portfolioService.GetPortfolioWithAssets(Guid.Parse("7c5c6310-51d8-4ad5-bd9d-914909e74ea3"));
+            var asset = new Asset("MXRF11", InvestmentCategory.REITs, Guid.Parse("7c5c6310-51d8-4ad5-bd9d-914909e74ea3"));
+            asset.AddTransaction(new Transaction(100, 10, true));
+
             try
             {
-                asset.AddTransaction(transaction);
-                portfolio.UpdateAsset(asset);
-
-                _assetService.Update(asset);
-                _transactionService.Add(transaction);
+                portfolioWithAssets.AddAsset(asset);
+                await _assetService.Add(asset);
             }
             catch (Exception ex)
             {
-
-                throw;  
+                _logger.LogError(ex, "Error adding transaction");
             }
+
+            return (Redirect(nameof(Index)));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateTransaction()
+        {
+            var portfolioWithAssets = await _portfolioService.GetPortfolioWithAssets(Guid.Parse("7c5c6310-51d8-4ad5-bd9d-914909e74ea3"));
+            var assetById = await _assetService.GetAssetWithInvestmentStatics(Guid.Parse("971c8fc4-92f4-4f8b-849e-ae6898d2e94d"));
+            var transaction = new Transaction(55, 19, true);
+
+            try
+            {
+                assetById.UpdateTotalInvested();
+                assetById.AddTransaction(transaction);
+                portfolioWithAssets.UpdateAsset(assetById);
+
+                await _transactionService.Add(transaction);
+                await _assetService.Update(assetById);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error ao atualizar o ativo");
+            }
+
+            return (Redirect(nameof(Index)));
+        }
+        
         public IActionResult Privacy()
         {
             return View();

@@ -7,7 +7,7 @@ namespace ControleInvestimento.Business.Models.Transaction.Services;
 public class TransactionService : BaseService, ITransactionService
 {
     private readonly ITransactionRepository _transactionRepository;
-    public TransactionService(INotifier notifier, ITransactionRepository transactionRepository) 
+    public TransactionService(INotifier notifier, ITransactionRepository transactionRepository)
         : base(notifier)
     {
         _transactionRepository = transactionRepository;
